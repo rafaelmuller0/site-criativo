@@ -29,7 +29,7 @@ function Index() {
     ["O que está incluído?", "Receita-base de brownie, orientações para casquinha e textura, variações de sabor, orientação de porcionamento e planilha simples para precificação. Entregue esses itens no produto antes de abrir as vendas."]
   ];
   return <main className="min-h-screen bg-[#fff9f0] text-[#402417]" style={{fontFamily:"'Arial',sans-serif"}}>
-    <div className="bg-[#412015] px-4 py-3 text-center text-xs font-bold tracking-wide text-[#ffe8c3] sm:text-sm">🍫 APRENDA A PRODUZIR BROWNIES PARA VENDER • ACESSO DIGITAL</div>
+    <div className="bg-[#412015] px-4 py-3 text-center text-xs font-bold tracking-wide text-[#ffe8c3] sm:text-sm">🔥 Oferta especial disponível somente hoje 29/10/2026</div>
     <section className="relative overflow-hidden bg-gradient-to-br from-[#28130f] via-[#592d20] to-[#7c3b1e] text-white">
       <div className="mx-auto grid max-w-6xl items-center gap-9 px-5 py-12 md:grid-cols-2 md:py-24">
         <div className="relative z-10">
