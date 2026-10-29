@@ -1,24 +1,67 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { ArrowRight, Check, ChevronDown, ChefHat, Clock3, Gift, ShieldCheck, TrendingUp, Calculator, Heart, BookOpen, Sparkles } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
+export const Route = createFileRoute("/")({ component: Index });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const CHECKOUT_URL = ""; // Insira o link real do checkout antes de anunciar
+const PRICE = 9.90;
+const money = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const heroImage = "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1400&q=85";
+const secondImage = "https://images.unsplash.com/photo-1589375025852-a66cdd1279df?auto=format&fit=crop&w=1000&q=85";
+
+function BuyButton({ label = "QUERO APRENDER POR R$ 9,90", secondary = false }: { label?: string; secondary?: boolean }) {
+  return <a href={CHECKOUT_URL || "#oferta"} onClick={(e) => { if (!CHECKOUT_URL) { e.preventDefault(); document.getElementById("aviso-checkout")?.scrollIntoView({behavior:"smooth"}); } }} className={`inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full px-8 py-5 text-center text-base font-black shadow-lg transition hover:-translate-y-1 hover:shadow-xl ${secondary ? "bg-white text-[#612616]" : "bg-[#ffcf44] text-[#392011]"}`}>{label}<ArrowRight size={21}/></a>;
+}
+
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  const [salePrice, setSalePrice] = useState(8);
+  const [unitCost, setUnitCost] = useState(3.2);
+  const [quantity, setQuantity] = useState(20);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const margin = salePrice - unitCost;
+  const projection = margin * quantity;
+  const faqs = [
+    ["Preciso saber cozinhar?", "Não. O material foi pensado para iniciantes e explica a ordem de preparo, os pontos da massa e as principais dificuldades."],
+    ["Preciso de equipamentos profissionais?", "Não. As receitas usam utensílios domésticos comuns e forno. Confira os materiais de cada receita antes de começar."],
+    ["Quanto posso ganhar vendendo?", "Depende do custo real dos ingredientes, embalagem, preço praticado, demanda e quantidade efetivamente vendida. A calculadora desta página é apenas uma simulação de margem bruta, não uma promessa de renda."],
+    ["O material é físico?", "Não. É um produto digital, com acesso às orientações e receitas após a confirmação do pagamento, conforme a plataforma escolhida."],
+    ["O que está incluído?", "Receita-base de brownie, orientações para casquinha e textura, variações de sabor, orientação de porcionamento e planilha simples para precificação. Entregue esses itens no produto antes de abrir as vendas."]
+  ];
+  return <main className="min-h-screen bg-[#fff9f0] text-[#402417]" style={{fontFamily:"'Arial',sans-serif"}}>
+    <div className="bg-[#412015] px-4 py-3 text-center text-xs font-bold tracking-wide text-[#ffe8c3] sm:text-sm">UM GUIA PRÁTICO PARA QUEM QUER COMEÇAR A VENDER DOCES FEITOS EM CASA</div>
+    <section className="relative overflow-hidden bg-[#592d20] text-white">
+      <div className="mx-auto grid max-w-6xl items-center gap-9 px-5 py-14 md:grid-cols-2 md:py-24">
+        <div className="relative z-10">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#d5a87b] bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#ffe1ad]"><Sparkles size={15}/> De sua cozinha para suas primeiras encomendas</span>
+          <h1 className="mt-6 text-4xl font-black leading-[1.07] tracking-tight sm:text-5xl lg:text-6xl">Brownies com <span className="text-[#ffcc69]">casquinha perfeita</span> para fazer, cortar e vender.</h1>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#fff0df]">Aprenda uma massa base, descubra como conseguir a casquinha delicada por cima e transforme uma fornada em porções prontas para oferecer.</p>
+          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[#ffeacf]"><span className="flex items-center gap-2"><Check size={18}/> Passo a passo simples</span><span className="flex items-center gap-2"><Check size={18}/> Cálculo de preço</span><span className="flex items-center gap-2"><Check size={18}/> Variações de sabores</span></div>
+          <div className="mt-9"><BuyButton/><p className="mt-3 text-xs text-[#e3c3ac]">Material digital • Pagamento único • Sem promessa de faturamento</p></div>
+        </div>
+        <div className="relative"><div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-[#e7a64b] opacity-50"/><img src={heroImage} alt="Brownies de chocolate cortados em pedaços" className="relative h-[340px] w-full rounded-[1.6rem] object-cover shadow-2xl md:h-[500px]"/><div className="absolute -bottom-5 -left-2 rounded-2xl bg-white px-5 py-4 text-[#432318] shadow-xl"><div className="text-xs font-semibold text-[#856046]">UMA MASSA, MUITAS POSSIBILIDADES</div><div className="mt-1 text-2xl font-black">Feito em casa ♡</div></div></div>
+      </div>
+    </section>
+    <section className="mx-auto max-w-6xl px-5 py-20">
+      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-black uppercase tracking-[.2em] text-[#a35e30]">É mais simples do que parece</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">Você não precisa montar uma confeitaria para começar.</h2><p className="mt-4 text-lg text-[#715444]">Comece com uma receita bem feita, porções padronizadas e um preço que faça sentido para a sua realidade.</p></div>
+      <div className="mt-12 grid gap-5 md:grid-cols-3">
+      {[{icon:<ChefHat/>,title:"Aprenda o ponto certo",body:"Massa chocolatuda, interior macio e orientações para formar a casquinha."},{icon:<Clock3/>,title:"Produza em fornadas",body:"Organize o preparo e o corte para obter porções com tamanho consistente."},{icon:<TrendingUp/>,title:"Venda com consciência",body:"Calcule custo por unidade antes de definir seu preço e sua margem."}].map((item,i)=><article key={i} className="rounded-3xl border border-[#edd6bf] bg-white p-7 shadow-sm"><div className="mb-5 inline-flex rounded-2xl bg-[#fff0d6] p-4 text-[#a34f22]">{item.icon}</div><h3 className="text-xl font-black">{item.title}</h3><p className="mt-3 leading-relaxed text-[#725847]">{item.body}</p></article>)}
+      </div>
+    </section>
+    <section className="bg-[#f7e8d7] px-5 py-20"><div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2"><img src={secondImage} alt="Brownie caseiro de chocolate em destaque" loading="lazy" className="h-[400px] w-full rounded-3xl object-cover shadow-xl"/><div><p className="text-sm font-black uppercase tracking-widest text-[#ae5e2d]">O que você vai aprender</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">Uma base boa vale mais do que 100 receitas confusas.</h2><div className="mt-7 space-y-4">{["O passo a passo de uma massa-base consistente","Como buscar casquinha fina e interior úmido","Ideias de sabores e finalizações","Como cortar, embalar e apresentar as unidades","Como calcular custos e definir preços"].map((t)=><div key={t} className="flex gap-3"><Check className="mt-1 shrink-0 text-[#a65c32]" size={20}/><span className="text-lg">{t}</span></div>)}</div></div></div></section>
+    <section className="mx-auto max-w-5xl px-5 py-20" id="calculadora"><div className="text-center"><span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#a55c33]"><Calculator size={19}/> Faça as contas</span><h2 className="mt-3 text-3xl font-black sm:text-4xl">Quanto sobra por brownie vendido?</h2><p className="mx-auto mt-4 max-w-2xl text-[#755748]">Veja um exemplo ajustável. O cálculo abaixo não é um resultado real de alunos: é uma simulação de margem bruta, antes de despesas adicionais e impostos.</p></div>
+      <div className="mt-10 grid gap-8 rounded-3xl border border-[#ecd8bf] bg-white p-6 shadow-xl md:grid-cols-2 md:p-10">
+        <div className="space-y-6">
+          <label className="block font-semibold">Preço de venda por unidade <strong className="float-right text-[#a65329]">{money(salePrice)}</strong><input aria-label="Preço de venda por unidade" type="range" min="4" max="20" step="0.5" value={salePrice} onChange={e=>setSalePrice(Number(e.target.value))} className="mt-4 w-full accent-[#a65329]"/></label>
+          <label className="block font-semibold">Custo estimado por unidade <strong className="float-right text-[#a65329]">{money(unitCost)}</strong><input aria-label="Custo estimado por unidade" type="range" min="1" max="12" step="0.2" value={unitCost} onChange={e=>setUnitCost(Number(e.target.value))} className="mt-4 w-full accent-[#a65329]"/></label>
+          <label className="block font-semibold">Unidades efetivamente vendidas <strong className="float-right text-[#a65329]">{quantity}</strong><input aria-label="Unidades vendidas" type="range" min="0" max="100" step="5" value={quantity} onChange={e=>setQuantity(Number(e.target.value))} className="mt-4 w-full accent-[#a65329]"/></label>
+        </div>
+        <div className="rounded-2xl bg-[#542c20] p-7 text-white"><p className="text-sm font-semibold text-[#efd2b8]">Margem bruta por unidade</p><strong className="mt-2 block text-4xl">{money(margin)}</strong><div className="my-6 h-px bg-white/20"/><p className="text-sm font-semibold text-[#efd2b8]">Margem bruta total simulada</p><strong className="mt-2 block text-5xl text-[#ffcf65]">{money(projection)}</strong><p className="mt-5 text-xs leading-relaxed text-[#edd1c0]">Exemplo inicial: venda a R$ 8,00, custo unitário estimado de R$ 3,20, 20 unidades vendidas = R$ 96,00 de margem bruta. Os valores são hipóteses ilustrativas, não preços de mercado verificados. Desconte gás, energia, perdas, transporte, taxas, tributos e valor do seu trabalho quando não estiverem incluídos no custo informado. Não há garantia de vendas.</p></div>
+      </div>
+    </section>
+    <section className="bg-[#532c21] px-5 py-20 text-white" id="oferta"><div className="mx-auto max-w-3xl text-center"><p className="font-bold uppercase tracking-[.2em] text-[#ffcf75]">Seu próximo passo começa aqui</p><h2 className="mt-4 text-4xl font-black">Brownies de Casquinha Perfeita</h2><p className="mt-4 text-lg text-[#f3dfcc]">Um guia direto ao ponto para praticar, acertar a receita e planejar suas primeiras vendas.</p><div className="mx-auto mt-9 max-w-xl rounded-3xl bg-white p-8 text-left text-[#462719] shadow-2xl"><div className="flex items-center gap-3"><BookOpen className="text-[#a45730]"/><h3 className="text-xl font-black">Seu acesso inclui</h3></div><ul className="mt-6 space-y-3">{["Guia digital com receita-base e passo a passo","Orientações para casquinha e textura","Ideias de variações e apresentações","Planilha simples de custos e precificação","Checklist para começar a oferecer por encomenda"].map(t=><li key={t} className="flex gap-3"><Check className="shrink-0 text-green-700" size={20}/>{t}</li>)}</ul><div className="mt-7 border-t border-[#ebd8c6] pt-6 text-center"><p className="text-sm text-[#816858]">Acesso digital por apenas</p><div className="mt-1 text-6xl font-black text-[#49251b]">{money(PRICE)}</div><p className="mt-2 text-sm text-[#8a6d5d]">Pagamento único</p><div className="mt-6"><BuyButton label="QUERO COMEÇAR AGORA"/></div><div className="mt-4 flex items-center justify-center gap-2 text-xs text-[#846b60]"><ShieldCheck size={16}/> Compra processada pela plataforma de checkout configurada</div></div></div><p id="aviso-checkout" className="mt-5 rounded-xl border border-[#e6bd81] bg-[#fff1d5] p-4 text-sm text-[#51301a]"><strong>Configuração pendente:</strong> o endereço de pagamento ainda não foi fornecido. Configure a constante CHECKOUT_URL em src/routes/index.tsx antes de publicar anúncios. O botão não simula compras.</p></div></section>
+    <section className="mx-auto max-w-3xl px-5 py-20"><div className="text-center"><h2 className="text-3xl font-black">Perguntas frequentes</h2><p className="mt-3 text-[#856b58]">Tudo o que você precisa saber antes de decidir.</p></div><div className="mt-8 divide-y divide-[#e7d3c0] border-y border-[#e7d3c0]">{faqs.map(([q,a],i)=><div key={q}><button type="button" aria-expanded={openFaq===i} onClick={()=>setOpenFaq(openFaq===i?null:i)} className="flex w-full items-center justify-between gap-3 py-5 text-left font-bold"><span>{q}</span><ChevronDown className={`shrink-0 transition-transform ${openFaq===i?"rotate-180":""}`}/></button>{openFaq===i&&<p className="pb-6 leading-relaxed text-[#73594b]">{a}</p>}</div>)}</div></section>
+    <section className="bg-[#f5e1c8] px-5 py-14 text-center"><Heart className="mx-auto text-[#ad5933]"/><h2 className="mx-auto mt-3 max-w-2xl text-3xl font-black">Comece por uma fornada. Aprenda a precificar. Descubra suas possibilidades.</h2><div className="mt-7"><BuyButton/></div></section>
+    <footer className="bg-[#351c16] px-5 py-10 text-center text-sm leading-relaxed text-[#dcc9ba]"><p>© {new Date().getFullYear()} Brownies de Casquinha Perfeita • Material educativo digital.</p><p className="mx-auto mt-3 max-w-3xl text-xs">Resultados dependem de custos, prática, demanda e vendas realizadas. Não garantimos renda ou faturamento. Antes de comercializar alimentos, observe normas locais de higiene, conservação e rotulagem. Imagens meramente ilustrativas.</p><p className="mt-3 text-xs">Política de privacidade e termos de compra: adicionar links oficiais antes do lançamento.</p></footer>
+  </main>;
 }
