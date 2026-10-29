@@ -11,7 +11,7 @@ const heroImage = "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?
 const secondImage = "https://images.unsplash.com/photo-1589375025852-a66cdd1279df?auto=format&fit=crop&w=1000&q=85";
 
 function BuyButton({ label = "QUERO APRENDER POR R$ 9,90", secondary = false }: { label?: string; secondary?: boolean }) {
-  return <a href={CHECKOUT_URL || "#oferta"} onClick={(e) => { if (!CHECKOUT_URL) { e.preventDefault(); document.getElementById("aviso-checkout")?.scrollIntoView({behavior:"smooth"}); } }} className={`inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full px-8 py-5 text-center text-base font-black shadow-lg transition hover:-translate-y-1 hover:shadow-xl ${secondary ? "bg-white text-[#612616]" : "bg-[#ffcf44] text-[#392011]"}`}>{label}<ArrowRight size={21}/></a>;
+  return <a href={CHECKOUT_URL || "#oferta"} onClick={(e) => { if (!CHECKOUT_URL) { e.preventDefault(); document.getElementById("oferta")?.scrollIntoView({behavior:"smooth"}); } }} className={`inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full px-8 py-5 text-center text-base font-black shadow-lg transition hover:-translate-y-1 hover:shadow-xl ${secondary ? "bg-white text-[#612616]" : "bg-[#ffcf44] text-[#392011]"}`}>{label}<ArrowRight size={21}/></a>;
 }
 
 function Index() {
